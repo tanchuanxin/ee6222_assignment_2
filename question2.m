@@ -37,7 +37,6 @@ angleInRadians = acos((trace(rotational_matrix)-1)/2);
 angleInDeg = rad2deg(angleInRadians);
 % angleInDeg = 10.2375 degrees;
 
-R = rotational_matrix;
 l = transpose ([ rotational_matrix(3 ,2)-rotational_matrix(2 ,3) rotational_matrix(1 ,3)-rotational_matrix(3 ,1) rotational_matrix(2 ,1)-rotational_matrix(1 ,2)]) ;
 l = l ./ vecnorm(l);
 % N vector of rotational axis, [-0.1640 -0.9831 0.0814 ]
