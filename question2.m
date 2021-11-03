@@ -14,3 +14,25 @@ X (: ,2) = X (: ,2) - Y0 ;
 P = [pts2 ones(8,1)*F];
 P (: ,1) = -( P (: ,1) - X0 ) ;
 P (: ,2) = P (: ,2) - Y0 ;
+
+% Obtain the L2 norm along each row
+X_norm = vecnorm (X , 2 , 2) ;
+% Row - wise devision of vector with it ’s norm
+X = X ./ X_norm ;
+
+% Likewise for P
+P_norm = vecnorm (P , 2 , 2) ;
+P = P ./ P_norm ;
+
+% Creating W matrix
+W = zeros (3 ,3) ;
+for i = 1:8
+temp = transpose ( X (i ,:) ) * P (i ,:) ;
+W = W + temp ;
+end
+
+% SVD approach
+[U , S , V ] = svd( W ) ;
+R = U * transpose ( V ) ;
+angle = acos((trace(R)-1)/2);
+rad2deg(angle)
