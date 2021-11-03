@@ -16,7 +16,8 @@ XA_2, XB_2 = 925, 273
 
 # method 1
 # using the formula found on slide 4 of lecture slides [2] and adapting it
-OO = ( (XA_1 - XB_1) / AB * OL_1 - (XA_2 - XB_2) / AB * OL_2)     /     ((XA_1 - XB_1) / AB - (XA_2 - XB_2) / AB)
+# OO = ( (XA_1 - XB_1) / AB * OL_1 - (XA_2 - XB_2) / AB * OL_2)     /     ((XA_1 - XB_1) / AB - (XA_2 - XB_2) / AB)
+OO = ( (XA_1 - XB_1) * OL_1 - (XA_2 - XB_2) * OL_2 )     /     ( (XA_1 - XB_1) - (XA_2 - XB_2) )
 print("focal length: ", OO)
 
 
