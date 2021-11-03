@@ -6,39 +6,33 @@ pts1 = [[129 322]; [544 1127]; [225 133]; [335 168]; [380 341]; [210 738]; [210 
 pts2 = [[304 318]; [725 1106]; [390 114]; [499 137]; [544 309]; [385 708]; [386 717]; [399 708];];
 
 % Center coordinates of image
-X0 = 960/2;
-Y0 = 1280/2;
+x_center = 960/2;
+y_center = 1280/2;
 
-% First image
-X = [pts1 ones(8,1)*F];
-X (: ,1) = X (: ,1) - X0 ;
-X (: ,2) = X (: ,2) - Y0 ;
+% Obtaining N-vectors
+image1_points = [pts1 ones(8,1)*F];
+image1_points(: ,1) = image1_points (: ,1) - X0 ;
+image1_points (: ,2) = image1_points (: ,2) - Y0 ;
+image1_norm = vecnorm (image1_points , 2 , 2) ;
+image1_points = image1_points ./ image1_norm ;
 
-% Second image
-P = [pts2 ones(8,1)*F];
-P (: ,1) = P (: ,1) - X0 ;
-P (: ,2) = P (: ,2) - Y0 ;
-
-% Obtain the L2 norm along each row
-X_norm = vecnorm (X , 2 , 2) ;
-% Row - wise devision of vector with its norm
-X = X ./ X_norm ;
-
-% Likewise for P
-P_norm = vecnorm (P , 2 , 2) ;
-P = P ./ P_norm ;
+image2_points = [pts2 ones(8,1)*F];
+image2_points (: ,1) = image2_points (: ,1) - X0 ;
+image2_points (: ,2) = image2_points (: ,2) - Y0 ;
+image2_norm = vecnorm (image2_points , 2 , 2) ;
+image2_points = image2_points ./ image2_norm ;
 
 % Creating W matrix
-W = zeros (3 ,3) ;
+weight_matrix = zeros (3 ,3) ;
 for i = 1:8
-temp = transpose ( X (i ,:) ) * P (i ,:) ;
-W = W + temp ;
+temp = transpose ( image1_points (i ,:) ) * image2_points (i ,:) ;
+weight_matrix = weight_matrix + temp ;
 end
 
 % SVD approach
 [U , S , V ] = svd( W ) ;
-R = U * transpose ( V ) ;
-angle = acos((trace(R)-1)/2);
-rad2deg(angle);
+rotational_matrix = U * transpose ( V ) ;
+angle = acos((trace(rotational_matrix)-1)/2);
+rad2deg(angle)
 
 % angle = 10.2375 degrees;
